@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextShift – Chuyển đổi văn bản thông minh</title>
+  <meta name="description" content="Công cụ chuyển đổi chữ hoa, chữ thường, Title Case và nhiều định dạng văn bản khác. Nhanh, miễn phí, không cần đăng ký.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <div class="logo-icon">Ts</div>
+    <span class="logo-text">Text<span>Shift</span></span>
+  </a>
+  <nav>
+    <a href="#tool" class="active">Chuyển Case</a>
+    <a href="#tools">Công cụ</a>
+    <a href="#about">Giới thiệu</a>
+  </nav>
+  <div class="header-right">
+    <button class="theme-btn" onclick="toggleTheme()" title="Đổi theme" id="themeBtn">🌙</button>
+  </div>
+</header>
+
+<section class="hero" id="tool">
+  <h1>Chuyển đổi văn bản<br>nhanh & <span class="highlight">thông minh</span></h1>
+  <p>Dán văn bản vào bên dưới, chọn kiểu chuyển đổi — xong ngay.</p>
+</section>
+
+<div class="tool-container">
+  <div class="tool-card">
+
+    <!-- Case Buttons -->
+    <div class="case-tabs" id="caseTabs">
+      <button class="case-btn" data-mode="sentence" onclick="setMode(this,'sentence')">Sentence case</button>
+      <button class="case-btn" data-mode="lower" onclick="setMode(this,'lower')">lower case</button>
+      <button class="case-btn" data-mode="upper" onclick="setMode(this,'upper')">UPPER CASE</button>
+      <button class="case-btn" data-mode="capital" onclick="setMode(this,'capital')">Capitalized Case</button>
+      <button class="case-btn" data-mode="alternating" onclick="setMode(this,'alternating')">aLtErNaTiNg cAsE</button>
+      <button class="case-btn" data-mode="title" onclick="setMode(this,'title')">Title Case</button>
+      <button class="case-btn" data-mode="inverse" onclick="setMode(this,'inverse')">iNVERSE cASE</button>
+      <button class="case-btn" data-mode="camel" onclick="setMode(this,'camel')">camelCase</button>
+      <button class="case-btn" data-mode="snake" onclick="setMode(this,'snake')">snake_case</button>
+      <button class="case-btn" data-mode="kebab" onclick="setMode(this,'kebab')">kebab-case</button>
+      <button class="case-btn" data-mode="pascal" onclick="setMode(this,'pascal')">PascalCase</button>
+      <button class="case-btn" data-mode="constant" onclick="setMode(this,'constant')">CONSTANT_CASE</button>
+    </div>
+
+    <!-- Textarea -->
+    <div class="textarea-wrap">
+      <textarea id="inputText" placeholder="Nhập hoặc dán văn bản vào đây..." oninput="processText()" spellcheck="false"></textarea>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-label">Ký tự</span>
+        <span class="stat-value" id="charCount">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Từ</span>
+        <span class="stat-value" id="wordCount">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Câu</span>
+        <span class="stat-value" id="sentCount">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Dòng</span>
+        <span class="stat-value" id="lineCount">0</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-bar">
+      <button class="action-btn primary" onclick="copyText()">📋 Sao chép</button>
+      <button class="action-btn secondary" onclick="downloadText()">⬇ Tải về</button>
+      <button class="action-btn secondary" onclick="pasteText()">📌 Dán</button>
+      <button class="action-btn danger" onclick="clearText()">🗑 Xóa</button>
+      <span class="copy-feedback" id="copyFeedback">✓ Đã sao chép!</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Tools Section -->
+<section class="section" id="tools">
+  <div class="section-title">Công cụ văn bản khác</div>
+  <div class="tools-grid">
+    <div class="tool-item" onclick="loadTool('reverse')">
+      <div class="tool-item-icon">↩</div>
+      <div class="tool-item-name">Đảo ngược văn bản</div>
+      <div class="tool-item-desc">Viết ngược chiều</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('removeSpaces')">
+      <div class="tool-item-icon">⎵</div>
+      <div class="tool-item-name">Xóa khoảng trắng</div>
+      <div class="tool-item-desc">Loại bỏ spaces thừa</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('removeLines')">
+      <div class="tool-item-icon">↕</div>
+      <div class="tool-item-name">Xóa dòng trống</div>
+      <div class="tool-item-desc">Dọn sạch line breaks</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('slugify')">
+      <div class="tool-item-icon">🔗</div>
+      <div class="tool-item-name">Tạo Slug URL</div>
+      <div class="tool-item-desc">Chuyển sang slug</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('stripHtml')">
+      <div class="tool-item-icon">🧹</div>
+      <div class="tool-item-name">Xóa HTML tags</div>
+      <div class="tool-item-desc">Giữ lại plain text</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('duplicate')">
+      <div class="tool-item-icon">🔁</div>
+      <div class="tool-item-name">Xóa dòng trùng lặp</div>
+      <div class="tool-item-desc">Unique lines only</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('wordFreq')">
+      <div class="tool-item-icon">📊</div>
+      <div class="tool-item-name">Đếm từ</div>
+      <div class="tool-item-desc">Tần suất xuất hiện</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('sort')">
+      <div class="tool-item-icon">🔤</div>
+      <div class="tool-item-name">Sắp xếp dòng</div>
+      <div class="tool-item-desc">A→Z hoặc Z→A</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('base64e')">
+      <div class="tool-item-icon">🔒</div>
+      <div class="tool-item-name">Base64 Encode</div>
+      <div class="tool-item-desc">Mã hóa Base64</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('base64d')">
+      <div class="tool-item-icon">🔓</div>
+      <div class="tool-item-name">Base64 Decode</div>
+      <div class="tool-item-desc">Giải mã Base64</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('urle')">
+      <div class="tool-item-icon">🌐</div>
+      <div class="tool-item-name">URL Encode</div>
+      <div class="tool-item-desc">Mã hóa URL</div>
+    </div>
+    <div class="tool-item" onclick="loadTool('urld')">
+      <div class="tool-item-icon">🌍</div>
+      <div class="tool-item-name">URL Decode</div>
+      <div class="tool-item-desc">Giải mã URL</div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-title">Tại sao dùng TextShift</div>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>⚡ Siêu nhanh</h3>
+      <p>Chuyển đổi tức thì khi bạn gõ, không cần bấm nút, không chờ đợi.</p>
+    </div>
+    <div class="about-card">
+      <h3>🔒 Riêng tư</h3>
+      <p>Mọi xử lý đều diễn ra ngay trên trình duyệt của bạn. Dữ liệu không bao giờ rời thiết bị.</p>
+    </div>
+    <div class="about-card">
+      <h3>🆓 Hoàn toàn miễn phí</h3>
+      <p>Không đăng ký, không giới hạn, không quảng cáo phiền toái.</p>
+    </div>
+    <div class="about-card">
+      <h3>🌙 Dark Mode</h3>
+      <p>Bảo vệ mắt khi làm việc đêm khuya với giao diện tối chuyên nghiệp.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 TextShift · Xây dựng với ❤ · <a href="#">Chính sách bảo mật</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="main.js"></script>
+</body>
+</html>
