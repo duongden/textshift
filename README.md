@@ -2,7 +2,7 @@
 
 Công cụ chuyển đổi văn bản chạy hoàn toàn trên trình duyệt. Không cần server, không cần đăng ký, không thu thập dữ liệu.
 
-🌐 **Demo**: [textshift.pages.dev](https://textshift.pages.dev)
+🌐 **Link**: [textshift.pages.dev](https://textshift.pages.dev)
 
 ---
 
@@ -30,26 +30,3 @@ Công cụ chuyển đổi văn bản chạy hoàn toàn trên trình duyệt. K
 - Hỗ trợ tiếng Việt đầy đủ
 
 ---
-
-## Cấu trúc
-
-```
-textshift/
-├── index.html   # HTML
-├── style.css    # CSS & CSS variables (light/dark theme)
-└── main.js      # Logic JavaScript
-```
-
----
-
-## Deploy
-
-Dự án là static site thuần — không cần build step.
-
-**Cloudflare Pages**
-1. Push code lên GitHub
-2. Vào [pages.cloudflare.com](https://pages.cloudflare.com) → Create project → Connect to Git
-3. Chọn repo, để trống Build command và Build output directory
-4. Save and Deploy
-
-Mỗi lần push code mới, Cloudflare tự động deploy lại.
